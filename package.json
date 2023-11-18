@@ -11,6 +11,7 @@
     "format:fix": "prettier --write --list-different ."
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@material-tailwind/react": "^2.1.4",
     "eslint-plugin-simple-import-sort": "^10.0.0",
