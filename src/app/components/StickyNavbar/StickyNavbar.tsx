@@ -3,7 +3,7 @@ import React from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button, IconButton, MobileNav, Navbar, Typography } from '@material-tailwind/react';
+import { Button, Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 
 import LoginModal from '@/components/LoginModal/LoginModal';
 
@@ -51,6 +51,8 @@ export function StickyNavbar() {
     window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));
   }, []);
 
+  const toggleLoginPopup = () => setPopupVisible(!popupVisible);
+
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {MenuLinksItems.map((item) => (
@@ -61,9 +63,9 @@ export function StickyNavbar() {
           className="p-1 font-normal"
           key={item.href}
         >
-          <a href={item.href} className="flex items-center">
-            {item.name}
-          </a>
+          <Link href={item.href} key={item.href} className="flex items-center" passHref>
+            <span>{item.name}</span>
+          </Link>
         </Typography>
       ))}
     </ul>
@@ -71,7 +73,7 @@ export function StickyNavbar() {
 
   return (
     <>
-      <LoginModal />
+      <LoginModal popupStateHandler={toggleLoginPopup} popupOpenState={popupVisible} />
       <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography as="a" href="/" className="mr-4 cursor-pointer py-1.5 font-medium">
@@ -80,11 +82,9 @@ export function StickyNavbar() {
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
             <div className="flex items-center gap-x-1">
-              {MenuButtonList.map((item) => (
-                <Button variant="text" size="sm" className="hidden lg:inline-block" key={item.href}>
-                  <span>{item.name}</span>
-                </Button>
-              ))}
+              <Button fullWidth variant="text" size="sm" onClick={toggleLoginPopup}>
+                <span>Logowanie</span>
+              </Button>
             </div>
             <IconButton
               variant="text"
@@ -100,6 +100,7 @@ export function StickyNavbar() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                   strokeWidth={2}
+                  color="black"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -110,6 +111,7 @@ export function StickyNavbar() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={2}
+                  color="black"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -117,18 +119,14 @@ export function StickyNavbar() {
             </IconButton>
           </div>
         </div>
-        <MobileNav open={openNav}>
+        <Collapse open={openNav}>
           {navList}
-          <div className="flex items-center gap-x-1">
-            {MenuButtonList.map((item) => (
-              <Link href={item.href}>
-                <Button fullWidth variant="text" size="sm" className="" key={item.href}>
-                  <span>{item.name}</span>
-                </Button>
-              </Link>
-            ))}
+          <div className="flex content-center items-center">
+            <Button fullWidth variant="text" size="sm" className="">
+              <span>Logowanie</span>
+            </Button>
           </div>
-        </MobileNav>
+        </Collapse>
       </Navbar>
     </>
   );
