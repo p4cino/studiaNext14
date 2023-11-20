@@ -13,8 +13,8 @@ import {
 } from '@material-tailwind/react';
 
 export default function Home() {
-  const [selectedFile, setSelectedFile] = React.useState();
-  const [preview, setPreview] = React.useState(null);
+  const [selectedFile, setSelectedFile] = React.useState<File | undefined>(undefined);
+  const [preview, setPreview] = React.useState<string | undefined>(undefined);
 
   React.useEffect(() => {
     if (!selectedFile) {
@@ -29,7 +29,7 @@ export default function Home() {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
-  const onSelectFile = (e) => {
+  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
       return;
