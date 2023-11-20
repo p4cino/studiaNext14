@@ -3,6 +3,8 @@ import { ThemeProvider } from '@material-tailwind/react';
 
 import { StickyNavbar } from '@/components/StickyNavbar/StickyNavbar';
 
+import Footer from './components/Footer/Footer';
+
 import './globals.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -10,8 +12,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ThemeProvider>
       <html lang="en">
         <body>
-          <StickyNavbar />
-          {children}
+          <div className="flex flex-col h-screen">
+            <StickyNavbar />
+            <div className="flex-grow">{children}</div>
+            <Footer />
+          </div>
         </body>
       </html>
     </ThemeProvider>
