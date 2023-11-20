@@ -38,7 +38,7 @@ const ProductCard: FunctionComponent<{}> = ({}) => {
         <Button
           ripple={false}
           fullWidth={true}
-          className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+          className="bg-blue-600/80 hover:bg-blue-500 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
         >
           Add to Cart
         </Button>
