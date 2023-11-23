@@ -3,183 +3,96 @@ import React from 'react';
 
 import { Card, Typography } from '@material-tailwind/react';
 
+const TABLE_HEAD = ['Nazwa Produktu', 'Cena', 'Stan na magazynie', 'Opcja'];
+
+const TABLE_ROWS = [
+  {
+    name: 'Apple AirPods',
+    price: '200$',
+    stock: '23',
+  },
+  {
+    name: 'Alexa Liras',
+    price: '300$',
+    stock: '4',
+  },
+  {
+    name: 'Laurent Perrier',
+    price: '400$',
+    stock: '19',
+  },
+  {
+    name: 'Michael Levi',
+    price: '800$',
+    stock: '24',
+  },
+  {
+    name: 'Richard Gran',
+    price: '100$',
+    stock: '4',
+  },
+];
+
+export function TableWithStripedRows() {
+  return (
+    <Card className="h-full w-full overflow-scroll">
+      <table className="w-full min-w-max table-auto text-left">
+        <thead>
+          <tr>
+            {TABLE_HEAD.map((head) => (
+              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-normal leading-none opacity-70"
+                >
+                  {head}
+                </Typography>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {TABLE_ROWS.map(({ name, price, stock }, index) => (
+            <tr key={name} className="even:bg-blue-gray-50/50">
+              <td className="p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                  {name}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                  {price}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                  {stock}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography
+                  as="a"
+                  href="#"
+                  variant="small"
+                  color="blue-gray"
+                  className="font-medium"
+                >
+                  Usun
+                </Typography>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Card>
+  );
+}
+
 export default function Home() {
   return (
-    <main className="container mx-auto py-8">
-      <Typography variant="h2" color="blue-gray" className="mb-2">
-        What is Material Tailwind
-      </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this can my website be in
-        english?. There is too much white space do less with more, so that will be a conversation
-        piece can you rework to make the pizza look more delicious other agencies charge much lesser
-        can you make the blue bluer?. I think we need to start from scratch can my website be in
-        english?, yet make it sexy i&apos;ll pay you in a week we don&apos;t need to pay upfront i
-        hope you understand can you make it stand out more?. Make the font bigger can you help me
-        out? you will get a lot of free exposure doing this that&apos;s going to be a chunk of
-        change other agencies charge much lesser. Are you busy this weekend? I have a new project
-        with a tight deadline that&apos;s going to be a chunk of change. There are more projects
-        lined up charge extra the next time. Can you help me out? you will get a lot of free
-        exposure doing this can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make the pizza look more
-        delicious other agencies charge much lesser can you make the blue bluer?. I think we need to
-        start from scratch can my website be in english?, yet make it sexy i&apos;ll pay you in a
-        week we don&apos;t need to pay upfront i hope you understand can you make it stand out
-        more?. Make the font bigger can you help me out? you will get a lot of free exposure doing
-        this that&apos;s going to be a chunk of change other agencies charge much lesser. Are you
-        busy this weekend? I have a new project with a tight deadline that&apos;s going to be a
-        chunk of change. There are more projects lined up charge extra the next time. Can you help
-        me out? you will get a lot of free exposure doing this can my website be in english?. There
-        is too much white space do less with more, so that will be a conversation piece can you
-        rework to make the pizza look more delicious other agencies charge much lesser can you make
-        the blue bluer?. I think we need to start from scratch can my website be in english?, yet
-        make it sexy i&apos;ll pay you in a week we don&apos;t need to pay upfront i hope you
-        understand can you make it stand out more?. Make the font bigger can you help me out? you
-        will get a lot of free exposure doing this that&apos;s going to be a chunk of change other
-        agencies charge much lesser. Are you busy this weekend? I have a new project with a tight
-        deadline that&apos;s going to be a chunk of change. There are more projects lined up charge
-        extra the next time. Can you help me out? you will get a lot of free exposure doing this can
-        my website be in english?. There is too much white space do less with more, so that will be
-        a conversation piece can you rework to make the pizza look more delicious other agencies
-        charge much lesser can you make the blue bluer?. I think we need to start from scratch can
-        my website be in english?, yet make it sexy i&apos;ll pay you in a week we don&apos;t need
-        to pay upfront i hope you understand can you make it stand out more?. Make the font bigger
-        can you help me out? you will get a lot of free exposure doing this that&apos;s going to be
-        a chunk of change other agencies charge much lesser. Are you busy this weekend? I have a new
-        project with a tight deadline that&apos;s going to be a chunk of change. There are more
-        projects lined up charge extra the next time. Can you help me out? you will get a lot of
-        free exposure doing this can my website be in english?. There is too much white space do
-        less with more, so that will be a conversation piece can you rework to make the pizza look
-        more delicious other agencies charge much lesser can you make the blue bluer?. I think we
-        need to start from scratch can my website be in english?, yet make it sexy i&apos;ll pay you
-        in a week we don&apos;t need to pay upfront i hope you understand can you make it stand out
-        more?. Make the font bigger can you help me out? you will get a lot of free exposure doing
-        this that&apos;s going to be a chunk of change other agencies charge much lesser. Are you
-        busy this weekend? I have a new project with a tight deadline that&apos;s going to be a
-        chunk of change. There are more projects lined up charge extra the next time. Can you help
-        me out? you will get a lot of free exposure doing this can my website be in english?. There
-        is too much white space do less with more, so that will be a conversation piece can you
-        rework to make the pizza look more delicious other agencies charge much lesser can you make
-        the blue bluer?. I think we need to start from scratch can my website be in english?, yet
-        make it sexy i&apos;ll pay you in a week we don&apos;t need to pay upfront i hope you
-        understand can you make it stand out more?. Make the font bigger can you help me out? you
-        will get a lot of free exposure doing this that&apos;s going to be a chunk of change other
-        agencies charge much lesser. Are you busy this weekend? I have a new project with a tight
-        deadline that&apos;s going to be a chunk of change. There are more projects lined up charge
-        extra the next time. Can you help me out? you will get a lot of free exposure doing this can
-        my website be in english?. There is too much white space do less with more, so that will be
-        a conversation piece can you rework to make the pizza look more delicious other agencies
-        charge much lesser can you make the blue bluer?. I think we need to start from scratch can
-        my website be in english?, yet make it sexy i&apos;ll pay you in a week we don&apos;t need
-        to pay upfront i hope you understand can you make it stand out more?. Make the font bigger
-        can you help me out? you will get a lot of free exposure doing this that&apos;s going to be
-        a chunk of change other agencies charge much lesser. Are you busy this weekend? I have a new
-        project with a tight deadline that&apos;s going to be a chunk of change. There are more
-        projects lined up charge extra the next time. Can you help me out? you will get a lot of
-        free exposure doing this can my website be in english?. There is too much white space do
-        less with more, so that will be a conversation piece can you rework to make the pizza look
-        more delicious other agencies charge much lesser can you make the blue bluer?. I think we
-        need to start from scratch can my website be in english?, yet make it sexy i&apos;ll pay you
-        in a week we don&apos;t need to pay upfront i hope you understand can you make it stand out
-        more?. Make the font bigger can you help me out? you will get a lot of free exposure doing
-        this that&apos;s going to be a chunk of change other agencies charge much lesser. Are you
-        busy this weekend? I have a new project with a tight deadline that&apos;s going to be a
-        chunk of change. There are more projects lined up charge extra the next time. Can you help
-        me out? you will get a lot of free exposure doing this can my website be in english?. There
-        is too much white space do less with more, so that will be a conversation piece can you
-        rework to make the pizza look more delicious other agencies charge much lesser can you make
-        the blue bluer?. I think we need to start from scratch can my website be in english?, yet
-        make it sexy i&apos;ll pay you in a week we don&apos;t need to pay upfront i hope you
-        understand can you make it stand out more?. Make the font bigger can you help me out? you
-        will get a lot of free exposure doing this that&apos;s going to be a chunk of change other
-        agencies charge much lesser. Are you busy this weekend? I have a new project with a tight
-        deadline that&apos;s going to be a chunk of change. There are more projects lined up charge
-        extra the next time. Can you help me out? you will get a lot of free exposure doing this can
-        my website be in english?. There is too much white space do less with more, so that will be
-        a conversation piece can you rework to make the pizza look more delicious other agencies
-        charge much lesser can you make the blue bluer?. I think we need to start from scratch can
-        my website be in english?, yet make it sexy i&apos;ll pay you in a week we don&apos;t need
-        to pay upfront i hope you understand can you make it stand out more?. Make the font bigger
-        can you help me out? you will get a lot of free exposure doing this that&apos;s going to be
-        a chunk of change other agencies charge much lesser. Are you busy this weekend? I have a new
-        project with a tight deadline that&apos;s going to be a chunk of change. There are more
-        projects lined up charge extra the next time. Can you help me out? you will get a lot of
-        free exposure doing this can my website be in english?. There is too much white space do
-        less with more, so that will be a conversation piece can you rework to make the pizza look
-        more delicious other agencies charge much lesser can you make the blue bluer?. I think we
-        need to start from scratch can my website be in english?, yet make it sexy i&apos;ll pay you
-        in a week we don&apos;t need to pay upfront i hope you understand can you make it stand out
-        more?. Make the font bigger can you help me out? you will get a lot of free exposure doing
-        this that&apos;s going to be a chunk of change other agencies charge much lesser. Are you
-        busy this weekend? I have a new project with a tight deadline that&apos;s going to be a
-        chunk of change. There are more projects lined up charge extra the next time. Can you help
-        me out? you will get a lot of free exposure doing this can my website be in english?. There
-        is too much white space do less with more, so that will be a conversation piece can you
-        rework to make the pizza look more delicious other agencies charge much lesser can you make
-        the blue bluer?. I think we need to start from scratch can my website be in english?, yet
-        make it sexy i&apos;ll pay you in a week we don&apos;t need to pay upfront i hope you
-        understand can you make it stand out more?. Make the font bigger can you help me out? you
-        will get a lot of free exposure doing this that&apos;s going to be a chunk of change other
-        agencies charge much lesser. Are you busy this weekend? I have a new project with a tight
-        deadline that&apos;s going to be a chunk of change. There are more projects lined up charge
-        extra the next time. Can you help me out? you will get a lot of free exposure doing this can
-        my website be in english?. There is too much white space do less with more, so that will be
-        a conversation piece can you rework to make the pizza look more delicious other agencies
-        charge much lesser can you make the blue bluer?. I think we need to start from scratch can
-        my website be in english?, yet make it sexy i&apos;ll pay you in a week we don&apos;t need
-        to pay upfront i hope you understand can you make it stand out more?. Make the font bigger
-        can you help me out? you will get a lot of free exposure doing this that&apos;s going to be
-        a chunk of change other agencies charge much lesser. Are you busy this weekend? I have a new
-        project with a tight deadline that&apos;s going to be a chunk of change. There are more
-        projects lined up charge extra the next time. Can you help me out? you will get a lot of
-        free exposure doing this can my website be in english?. There is too much white space do
-        less with more, so that will be a conversation piece can you rework to make the pizza look
-        more delicious other agencies charge much lesser can you make the blue bluer?. I think we
-        need to start from scratch can my website be in english?, yet make it sexy i&apos;ll pay you
-        in a week we don&apos;t need to pay upfront i hope you understand can you make it stand out
-        more?. Make the font bigger can you help me out? you will get a lot of free exposure doing
-        this that&apos;s going to be a chunk of change other agencies charge much lesser. Are you
-        busy this weekend? I have a new project with a tight deadline that&apos;s going to be a
-        chunk of change. There are more projects lined up charge extra the next time. Can you help
-        me out? you will get a lot of free exposure doing this can my website be in english?. There
-        is too much white space do less with more, so that will be a conversation piece can you
-        rework to make the pizza look more delicious other agencies charge much lesser can you make
-        the blue bluer?. I think we need to start from scratch can my website be in english?, yet
-        make it sexy i&apos;ll pay you in a week we don&apos;t need to pay upfront i hope you
-        understand can you make it stand out more?. Make the font bigger can you help me out? you
-        will get a lot of free exposure doing this that&apos;s going to be a chunk of change other
-        agencies charge much lesser. Are you busy this weekend? I have a new project with a tight
-        deadline that&apos;s going to be a chunk of change. There are more projects lined up charge
-        extra the next time. Can you help me out? you will get a lot of free exposure doing this can
-        my website be in english?. There is too much white space do less with more, so that will be
-        a conversation piece can you rework to make the pizza look more delicious other agencies
-        charge much lesser can you make the blue bluer?. I think we need to start from scratch can
-        my website be in english?, yet make it sexy i&apos;ll pay you in a week we don&apos;t need
-        to pay upfront i hope you understand can you make it stand out more?. Make the font bigger
-        can you help me out? you will get a lot of free exposure doing this that&apos;s going to be
-        a chunk of change other agencies charge much lesser. Are you busy this weekend? I have a new
-        project with a tight deadline that&apos;s going to be a chunk of change. There are more
-        projects lined up charge extra the next time. Can you help me out? you will get a lot of
-        free exposure doing this can my website be in english?. There is too much white space do
-        less with more, so that will be a conversation piece can you rework to make the pizza look
-        more delicious other agencies charge much lesser can you make the blue bluer?. I think we
-        need to start from scratch can my website be in english?, yet make it sexy i&apos;ll pay you
-        in a week we don&apos;t need to pay upfront i hope you understand can you make it stand out
-        more?. Make the font bigger can you help me out? you will get a lot of free exposure doing
-        this that&apos;s going to be a chunk of change other agencies charge much lesser. Are you
-        busy this weekend? I have a new project with a tight deadline that&apos;s going to be a
-        chunk of change. There are more projects lined up charge extra the next time. Can you help
-        me out? you will get a lot of free exposure doing this can my website be in english?. There
-        is too much white space do less with more, so that will be a conversation piece can you
-        rework to make the pizza look more delicious other agencies charge much lesser can you make
-        the blue bluer?. I think we need to start from scratch can my website be in english?, yet
-        make it sexy i&apos;ll pay you in a week we don&apos;t need to pay upfront i hope you
-        understand can you make it stand out more?. Make the font bigger can you help me out? you
-        will get a lot of free exposure doing this that&apos;s going to be a chunk of change other
-        agencies charge much lesser. Are you busy this weekend? I have a new project with a tight
-        deadline that&apos;s going to be a chunk of change. There are more projects lined up charge
-        extra the next time.
-      </Typography>
+    <main className="container mx-auto py-8 px-8">
+      <TableWithStripedRows />
     </main>
   );
 }

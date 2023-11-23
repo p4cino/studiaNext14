@@ -12,7 +12,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "checkJs": true,
     "incremental": true,
+    "importHelpers": true,
     "plugins": [
       {
         "name": "next"

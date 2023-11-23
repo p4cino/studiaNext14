@@ -1,9 +1,10 @@
 'use client';
 import React from 'react';
+import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button, Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
+import { Badge, Button, Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 
 import LoginModal from '@/components/LoginModal/LoginModal';
 
@@ -82,9 +83,20 @@ export function StickyNavbar() {
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
             <div className="flex items-center gap-x-1">
-              <Button fullWidth variant="text" size="sm" onClick={toggleLoginPopup}>
+              <Button
+                fullWidth
+                variant="text"
+                size="sm"
+                onClick={toggleLoginPopup}
+                className="hidden md:block"
+              >
                 <span>Logowanie</span>
               </Button>
+              <Badge color="blue" content={1}>
+                <IconButton>
+                  <ShoppingCartIcon className="h-4 w-4" />
+                </IconButton>
+              </Badge>
             </div>
             <IconButton
               variant="text"

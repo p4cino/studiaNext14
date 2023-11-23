@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ThemeProvider>
       <html lang="en">
         <body>
-          <div className="flex flex-col h-screen">
+          <div className="flex flex-col min-h-screen">
             <StickyNavbar />
             <div className="flex-grow">{children}</div>
             <Footer />
