@@ -105,7 +105,7 @@ export function StickyNavbar() {
                   onClick={() => signIn()}
                   className="hidden md:block"
                 >
-                  <span>Wyloguj {session?.user?.email}</span>
+                  <span>Wyloguj {session?.message}</span>
                 </Button>
               )}
               <Badge color="blue" content={1}>

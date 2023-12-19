@@ -19,11 +19,12 @@ export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Logowanie',
+      type: 'credentials',
       credentials: {
         email: { label: 'Email', type: 'text', placeholder: 'email@email.com' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
         console.log(baseUrl);
 
@@ -64,4 +65,46 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
+  session: {
+    strategy: 'jwt',
+  },
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      return true;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      // session.accessToken = token.accessToken;
+      session.user.id = token.id;
+      return session;
+    },
+    async jwt({ token, user, account, profile }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        // token.id = profile.id;
+      }
+      return token;
+    },
+    // async jwt({ token, account, user }) {
+    //   if (user) {
+    //     token.user = user;
+    //     token.accessToken = user.access_token;
+    //   }
+    //   return token;
+    // },
+    // async session({ session, token }: { session: any; token: any }) {
+    //   session.address = token.sub;
+    //   session.user.name = token.sub;
+    //   session.user.image = 'https://www.fillmurray.com/128/128';
+    //   return session;
+    // },
+    // async session({ session, token }) {
+    //   session.accessToken = token.access_token;
+    //   session.user = token.user;
+    //   return session;
+    // },
+  },
 };
