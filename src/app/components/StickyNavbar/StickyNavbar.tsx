@@ -5,9 +5,9 @@ import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { Badge, Button, Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 
 import LoginModal from '@/components/LoginModal/LoginModal';
+import { Badge, Button, Collapse, IconButton, Navbar, Typography } from '@/ThemeProvider';
 
 type MenuItem = {
   name: string;
@@ -73,6 +73,8 @@ export function StickyNavbar() {
     </ul>
   );
 
+  const { data: session } = useSession();
+
   return (
     <>
       <LoginModal popupStateHandler={toggleLoginPopup} popupOpenState={popupVisible} />
@@ -84,15 +86,28 @@ export function StickyNavbar() {
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
             <div className="flex items-center gap-x-1">
-              <Button
-                fullWidth
-                variant="text"
-                size="sm"
-                onClick={() => signIn()}
-                className="hidden md:block"
-              >
-                <span>Logowanie</span>
-              </Button>
+              {!session && (
+                <Button
+                  fullWidth
+                  variant="text"
+                  size="sm"
+                  onClick={() => signIn()}
+                  className="hidden md:block"
+                >
+                  <span>Logowanie</span>
+                </Button>
+              )}
+              {session && (
+                <Button
+                  fullWidth
+                  variant="text"
+                  size="sm"
+                  onClick={() => signIn()}
+                  className="hidden md:block"
+                >
+                  <span>Wyloguj {session?.user?.email}</span>
+                </Button>
+              )}
               <Badge color="blue" content={1}>
                 <IconButton>
                   <ShoppingCartIcon className="h-4 w-4" />

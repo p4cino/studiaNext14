@@ -1,6 +1,20 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+interface IAuthorizationResult {
+  accessToken?: string;
+  user?: {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string | null;
+    created_at: string;
+    updated_at: string;
+  };
+  message?: string;
+  status: boolean;
+}
+
 export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -11,49 +25,43 @@ export const options: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         const baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+        console.log(baseUrl);
 
         try {
-          const response = await fetch(baseUrl + '/api/v1/login', {
+          const res = await fetch(baseUrl + '/api/v1/login', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(credentials),
+            body: JSON.stringify({
+              email: credentials?.email,
+              password: credentials?.password,
+            }),
+            headers: { 'Content-Type': 'application/json' },
           });
 
-          const data: { access_token: string } = await response.json();
-
-          if (!response.ok) {
-            throw response;
-          }
-          console.log(response);
-          return { accessToken: data?.access_token };
-        } catch (error) {
-          if (error instanceof Response) {
+          if (!res.ok) {
             return null;
           }
-          console.log(error);
+
+          const parsedResponse = await res.json();
+          if (!parsedResponse.status) {
+            throw new Error(`Authorization failed: ${parsedResponse.message}`);
+          }
+
+          console.log(parsedResponse);
+          const data = {
+            id: parsedResponse.user.id.toString(),
+            jwt: parsedResponse?.access_token,
+            ...credentials,
+            user: parsedResponse?.user,
+            message: parsedResponse?.message,
+            status: parsedResponse?.status,
+          };
+          return data;
+        } catch (e) {
+          return null;
         }
 
         throw new Error('An error has occurred during login request');
       },
     }),
   ],
-  // callbacks: {
-  // jwt: async ({ token, user }) => {
-  //   user && (token.user = user);
-  //   return token;
-  // },
-  // session: async ({ session, token }) => {
-  //   session.user = token.user; // Setting token in session
-  //   return session;
-  // },
-  // },
-  // pages: {
-  //   signIn: '/login', //Need to define custom login page (if using)
-  // },
-  // session: {
-  //   strategy: 'jwt',
-  //   maxAge: parseInt(process.env.NEXTAUTH_JWT_AGE!) || 1209600,
-  // },
 };

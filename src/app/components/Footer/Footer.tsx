@@ -1,7 +1,8 @@
 import { FunctionComponent } from 'react';
 
 import Image from 'next/image';
-import { Typography } from '@material-tailwind/react';
+
+import { Typography } from '@/ThemeProvider';
 
 const Footer: FunctionComponent<{}> = ({}) => {
   return (
