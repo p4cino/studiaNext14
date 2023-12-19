@@ -21,6 +21,8 @@ interface ILoginModal {
 const LoginModal: FunctionComponent<ILoginModal> = ({ popupStateHandler, popupOpenState }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   return (
     <Dialog

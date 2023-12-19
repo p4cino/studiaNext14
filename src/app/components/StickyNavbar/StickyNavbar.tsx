@@ -4,6 +4,7 @@ import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { Badge, Button, Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 
 import LoginModal from '@/components/LoginModal/LoginModal';
@@ -87,7 +88,7 @@ export function StickyNavbar() {
                 fullWidth
                 variant="text"
                 size="sm"
-                onClick={toggleLoginPopup}
+                onClick={() => signIn()}
                 className="hidden md:block"
               >
                 <span>Logowanie</span>
