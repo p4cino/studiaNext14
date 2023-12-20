@@ -1,8 +1,9 @@
 'use client';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { CurrencyDollarIcon } from '@heroicons/react/24/solid';
 
 import Image from 'next/image';
+import { signIn, useSession } from 'next-auth/react';
 import {
   Button,
   Card,
@@ -60,6 +61,14 @@ const CustomArrow: FunctionComponent<IButtonIcon> = ({ onClick, direction, isDis
 export default function Home() {
   const [selectedFiles, setSelectedFiles] = React.useState<FileList | null>(null);
   const [imagePreviews, setImagePreviews] = React.useState<string[] | []>([]);
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session?.error === 'RefreshAccessTokenError') {
+      signIn(); // Force sign in to hopefully resolve error
+    }
+  }, [session]);
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const images = [];

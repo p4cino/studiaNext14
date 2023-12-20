@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 import LoginModal from '@/components/LoginModal/LoginModal';
+
 import {
   Badge,
   Button,
@@ -80,7 +81,8 @@ export function StickyNavbar() {
     </ul>
   );
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  console.log(useSession());
 
   return (
     <>
@@ -109,10 +111,10 @@ export function StickyNavbar() {
                   fullWidth
                   variant="text"
                   size="sm"
-                  onClick={() => signIn()}
+                  onClick={() => signOut()}
                   className="hidden md:block"
                 >
-                  <span>Wyloguj {session?.message}</span>
+                  <span>Wyloguj {session?.user?.name}</span>
                 </Button>
               )}
               <Badge color="blue" content={1}>

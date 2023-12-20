@@ -1,16 +1,18 @@
 import type { NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  email_verified_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface IAuthorizationResult {
-  accessToken?: string;
-  user?: {
-    id: number;
-    name: string;
-    email: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-  };
+  access_token?: string;
+  user?: IUser;
   message?: string;
   status: boolean;
 }
@@ -24,9 +26,8 @@ export const authConfig: NextAuthConfig = {
         email: { label: 'Email', type: 'text', placeholder: 'email@email.com' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<IUser | null> {
         const baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
-        console.log(baseUrl);
 
         try {
           const res = await fetch(baseUrl + '/api/v1/login', {
@@ -39,57 +40,52 @@ export const authConfig: NextAuthConfig = {
           });
 
           if (!res.ok) {
-            return null;
+            throw new Error(`HTTP error! Status: ${res.status}`);
           }
 
           const parsedResponse = await res.json();
+
           if (!parsedResponse.status) {
             throw new Error(`Authorization failed: ${parsedResponse.message}`);
           }
 
-          console.log(parsedResponse);
-          const data = {
+          const data: IUser & { access_token: string } = {
             id: parsedResponse.user.id.toString(),
-            jwt: parsedResponse.access_token,
-            ...credentials,
-            user: parsedResponse.user,
-            message: parsedResponse.message,
-            status: parsedResponse.status,
+            name: parsedResponse.user.name,
+            email: parsedResponse.user.email,
+            email_verified_at: parsedResponse.user.email_verified_at,
+            created_at: parsedResponse.user.created_at,
+            updated_at: parsedResponse.user.updated_at,
+            access_token: parsedResponse.access_token,
           };
+
           return data;
-        } catch (e) {
+        } catch (error) {
+          console.error('An error occurred during login request:', error);
           return null;
         }
-
-        throw new Error('An error has occurred during login request');
       },
     }),
   ],
   theme: {
-    colorScheme: 'light', // "auto" | "dark" | "light"
-    brandColor: '#2196f3', // Hex color code
-    logo: '/logo.png', // Absolute URL to image
-    buttonText: '', // Hex color code
+    colorScheme: 'light',
+    brandColor: '#2196f3',
+    logo: '/logo.png',
+    buttonText: '',
   },
   callbacks: {
-    // async signIn({ user, account, profile, email, credentials }) {
-    //   return true;
-    // },
-    // async redirect({ url, baseUrl }) {
-    //   return baseUrl;
-    // },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id;
+        token.idToken = user.id;
+        token.accessToken = user?.access_token;
       }
       return token;
     },
+    session({ session, token }) {
+      if (token) {
+        session.accessToken = token.accessToken;
+      }
+      return session;
+    },
   },
-  // pages: {
-  // signIn: '/auth/signin',
-  // signOut: '/auth/signout',
-  // error: '/auth/error', // Error code passed in query string as ?error=
-  // verifyRequest: '/auth/verify-request', // (used for check email message)
-  // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
-  // },
 };
