@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 
 import Image from 'next/image';
 
-import { Typography } from '@/ThemeProvider';
+import { Typography } from '../../providers/ThemeProvider';
 
 const Footer: FunctionComponent<{}> = ({}) => {
   return (

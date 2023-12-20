@@ -1,8 +1,7 @@
+import Footer from '@/components/Footer/Footer';
 import { StickyNavbar } from '@/components/StickyNavbar/StickyNavbar';
-
-import Footer from './components/Footer/Footer';
-import Provider from './Provider';
-import { ThemeProvider } from './ThemeProvider';
+import Provider from '@/providers/Provider';
+import { ThemeProvider } from '@/providers/ThemeProvider';
 
 import './globals.css';
 

@@ -7,7 +7,14 @@ import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 import LoginModal from '@/components/LoginModal/LoginModal';
-import { Badge, Button, Collapse, IconButton, Navbar, Typography } from '@/ThemeProvider';
+import {
+  Badge,
+  Button,
+  Collapse,
+  IconButton,
+  Navbar,
+  Typography,
+} from '../../providers/ThemeProvider';
 
 type MenuItem = {
   name: string;
