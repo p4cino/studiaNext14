@@ -2,18 +2,16 @@
 import React, { FunctionComponent } from 'react';
 import { CurrencyDollarIcon } from '@heroicons/react/24/solid';
 
-import Image from 'next/image';
 import {
   Button,
   Card,
-  Carousel,
   IconButton,
   Input,
   Option,
   Select,
   Textarea,
   Typography,
-} from '@material-tailwind/react';
+} from '@/providers/ThemeProvider';
 
 interface IButtonIcon {
   onClick?: () => void;

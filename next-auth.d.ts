@@ -1,20 +1,18 @@
-// import { JWT, Session, User } from 'next-auth/next';
+import { JWT, Session, User } from 'next-auth/next';
 
-// declare module 'next-auth' {
-//   interface Session {
-//     accessToken: string;
-//     user: {
-//       id: string;
-//       accessToken: string;
-//     } & Session['user'];
-//   }
-//   interface User {
-//     access_token: string;
-//   }
-//   interface JWT {
-//     access_token: string;
-//   }
-//   interface Token {
-//     access_token: string;
-//   }
-// }
+import { IUser } from '@/api/auth/[...nextauth]/auth.config';
+
+declare module 'next-auth' {
+  interface Session extends Session {
+    user: IUser & Session['user'];
+  }
+  interface User extends IUser {
+    access_token: IUser['access_token'];
+  }
+  interface JWT {
+    access_token: IUser['access_token'];
+  }
+  interface Token {
+    access_token: IUser['access_token'];
+  }
+}

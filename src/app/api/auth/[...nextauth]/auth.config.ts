@@ -1,21 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-export interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  email_verified_at: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface IAuthorizationResult {
-  access_token?: string;
-  user?: IUser;
-  message?: string;
-  status: boolean;
-}
+import { IUser } from './IUserInterface';
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -49,7 +35,7 @@ export const authConfig: NextAuthConfig = {
             throw new Error(`Authorization failed: ${parsedResponse.message}`);
           }
 
-          const data: IUser & { access_token: string } = {
+          const data: IUser = {
             id: parsedResponse.user.id.toString(),
             name: parsedResponse.user.name,
             email: parsedResponse.user.email,
@@ -83,7 +69,7 @@ export const authConfig: NextAuthConfig = {
     },
     session({ session, token }) {
       if (token) {
-        session.accessToken = token.accessToken;
+        session.user.access_token = token.access_token;
       }
       return session;
     },
