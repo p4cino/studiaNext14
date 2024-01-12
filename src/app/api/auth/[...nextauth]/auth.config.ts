@@ -35,7 +35,7 @@ export const authConfig: NextAuthConfig = {
             throw new Error(`Authorization failed: ${parsedResponse.message}`);
           }
 
-          const data: IUser = {
+          return {
             id: parsedResponse.user.id.toString(),
             name: parsedResponse.user.name,
             email: parsedResponse.user.email,
@@ -44,9 +44,6 @@ export const authConfig: NextAuthConfig = {
             updated_at: parsedResponse.user.updated_at,
             access_token: parsedResponse.access_token,
           };
-          console.log(data);
-
-          return data;
         } catch (error) {
           console.error('An error occurred during login request:', error);
           return null;
@@ -61,7 +58,7 @@ export const authConfig: NextAuthConfig = {
     buttonText: '',
   },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       return { ...token, ...user };
     },
     async session({ session, token }) {
