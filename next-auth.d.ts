@@ -1,4 +1,4 @@
-import { JWT, Session, User } from 'next-auth/next';
+// import { JWT, Session, User } from 'next-auth/next';
 
 import { IUser } from '@/api/auth/[...nextauth]/auth.config';
 

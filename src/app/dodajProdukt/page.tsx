@@ -1,20 +1,21 @@
 'use client';
 import React, { FunctionComponent, useEffect } from 'react';
 import { CurrencyDollarIcon } from '@heroicons/react/24/solid';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import Image from 'next/image';
-import { signIn, useSession } from 'next-auth/react';
 import {
   Button,
   Card,
   Carousel,
   IconButton,
   Input,
-  Option,
-  Select,
   Textarea,
   Typography,
 } from '@material-tailwind/react';
+
+import ApiClient from '@/providers/axios-client';
 
 interface IButtonIcon {
   onClick?: () => void;
@@ -58,31 +59,66 @@ const CustomArrow: FunctionComponent<IButtonIcon> = ({ onClick, direction, isDis
   </IconButton>
 );
 
+const ProductSchema = Yup.object().shape({
+  title: Yup.string().required('Nazwa produktu jest wymagana'),
+  body: Yup.string().required('Opis produktu jest wymagany'),
+  price: Yup.number().positive('Cena musi być liczbą dodatnią').required('Cena jest wymagana'),
+  amount: Yup.number().positive('Ilość musi być liczbą dodatnią').required('Ilość jest wymagana'),
+  // ... (dalsza walidacja dla obrazka, jeśli potrzebna) ...
+});
+
 export default function Home() {
-  const [selectedFiles, setSelectedFiles] = React.useState<FileList | null>(null);
-  const [imagePreviews, setImagePreviews] = React.useState<string[] | []>([]);
-
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    if (!session) {
-      signIn(); // Force sign in to hopefully resolve error
-    }
-  }, [session]);
+  // const [selectedFiles, setSelectedFiles] = React.useState<FileList | null>(null);
+  const [imagePreviews, setImagePreviews] = React.useState<string[]>([]);
+  const [loadingResponse, setLoadingResponse] = React.useState<boolean>(false);
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const images = [];
     const files = e.target.files;
 
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        images.push(URL.createObjectURL(files[i]));
-      }
+    if (files && files.length > 0) {
+      const images = Array.from(files).map((file) => URL.createObjectURL(file));
 
-      setSelectedFiles(files);
       setImagePreviews(images);
+      formik.setFieldValue('image', files[0]);
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      body: '',
+      price: '',
+      amount: '',
+      image: '',
+    },
+    onSubmit: async (values) => {
+      setLoadingResponse(true);
+
+      const formData = new FormData();
+      for (const key in values) {
+        if (key === 'image' && values[key]) {
+          formData.append(key, values[key]);
+        } else {
+          // @ts-ignore
+          formData.append(key, values[key]);
+        }
+      }
+
+      ApiClient.post('/api/v1/products/add', values, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          setLoadingResponse(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  });
 
   return (
     <main className="container mx-auto py-8 px-8">
@@ -90,16 +126,34 @@ export default function Home() {
         <Typography variant="h4" color="blue-gray">
           Dodawanie Produktu
         </Typography>
-        <form className="mt-8 mb-2 w-80 w-full sm:w-96" action="#send">
+        <form className="mt-8 mb-2 w-80 w-full sm:w-96" onSubmit={formik.handleSubmit}>
           <div className="mb-1 flex flex-col gap-6">
-            <Input variant="static" size="lg" label="Nazwa Produktu" crossOrigin="" />
-            <Textarea label="Opis Produktu" />
-            <Select label="Kategoria">
-              <Option>Słuchawki</Option>
-              <Option>Telefony</Option>
-              <Option>Akcesoria</Option>
-            </Select>
-            <Input label="Cena" icon={<CurrencyDollarIcon />} crossOrigin="" />
+            <Input
+              variant="static"
+              size="lg"
+              label="Nazwa Produktu"
+              name="title"
+              crossOrigin=""
+              onChange={formik.handleChange}
+            />
+            <Textarea label="Opis Produktu" name="body" onChange={formik.handleChange} />
+            <Input
+              label="Cena"
+              icon={<CurrencyDollarIcon />}
+              name="price"
+              crossOrigin=""
+              onChange={formik.handleChange}
+              type="number"
+              step="0.01"
+            />
+            <Input
+              label="Ilośc"
+              icon={<CurrencyDollarIcon />}
+              crossOrigin=""
+              onChange={formik.handleChange}
+              name="amount"
+              value={formik.values.amount}
+            />
             {imagePreviews && (
               <div>
                 <Typography variant="small">
@@ -136,48 +190,51 @@ export default function Home() {
                 </Carousel>
               </div>
             )}
-            <div className="flex items-center justify-center w-full">
-              <label
-                htmlFor="dropzone-file"
-                className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-              >
-                <div className="flex flex-col items-center justify-center pt-5 pb-6 ">
-                  <svg
-                    className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 16"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                    />
-                  </svg>
-                  <p className="text-sm mb-2 text-gray-500 dark:text-gray-400 text-center">
-                    <span className="font-semibold">Kliknij by dodać obrazki</span> albo przeciągnij
-                    i upuść
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                    SVG, PNG, JPG bądź GIF (MAX. 800x400px)
-                  </p>
-                </div>
-                <input
-                  onChange={onSelectFile}
-                  id="dropzone-file"
-                  type="file"
-                  className="hidden"
-                  accept=".jpg,.png,.svg,.gif"
-                  multiple
-                />
-              </label>
-            </div>
+            {imagePreviews.length === 0 && (
+              <div className="flex items-center justify-center w-full">
+                <label
+                  htmlFor="dropzone-file"
+                  className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                >
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6 ">
+                    <svg
+                      className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                      />
+                    </svg>
+                    <p className="text-sm mb-2 text-gray-500 dark:text-gray-400 text-center">
+                      <span className="font-semibold">Kliknij by dodać obrazek</span> albo
+                      przeciągnij i upuść
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                      SVG, PNG, JPG bądź GIF (MAX. 800x400px)
+                    </p>
+                  </div>
+                  <input
+                    onChange={onSelectFile}
+                    id="dropzone-file"
+                    name="image"
+                    type="file"
+                    className="hidden"
+                    accept=".jpg,.png,.svg,.gif"
+                    // multiple
+                  />
+                </label>
+              </div>
+            )}
           </div>
           <Button className="mt-6" fullWidth type="submit">
-            Dodaj Produkt
+            {loadingResponse ? 'Przetwarzanie...' : 'Dodaj Produkt'}
           </Button>
         </form>
       </Card>

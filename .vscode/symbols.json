@@ -1,1 +1,67 @@
-{"symbols":{"IUser":{"hasNamespace":false,"type":1,"moduleName":"IUserInterface","relativePath":"src\\app\\api\\auth\\[...nextauth]\\IUserInterface"},"IAuthorizationResult":{"hasNamespace":false,"type":1,"moduleName":"IUserInterface","relativePath":"src\\app\\api\\auth\\[...nextauth]\\IUserInterface"},"next-auth.Session":{"hasNamespace":true,"type":1,"moduleName":"next-auth.d","relativePath":"next-auth.d"},"User":{"hasNamespace":false,"type":1,"moduleName":"next-auth.d","relativePath":"next-auth.d"},"JWT":{"hasNamespace":false,"type":1,"moduleName":"next-auth.d","relativePath":"next-auth.d"},"Token":{"hasNamespace":false,"type":1,"moduleName":"next-auth.d","relativePath":"next-auth.d"},"PageProps":{"hasNamespace":false,"type":1,"moduleName":"layout","relativePath":".next\\types\\app\\layout"},"LayoutProps":{"hasNamespace":false,"type":1,"moduleName":"layout","relativePath":".next\\types\\app\\layout"}},"files":{"next-env.d.ts":"2023-12-22T13:25:12.230Z","tailwind.config.ts":"2023-12-22T13:24:12.569Z",".next\\types\\app\\layout.ts":"2023-12-22T15:10:49.093Z",".next\\types\\app\\page.ts":"2023-12-22T15:10:49.093Z",".next\\types\\app\\dodajProdukt\\page.ts":"2023-12-22T15:10:49.093Z",".next\\types\\app\\edycjaProduktu\\page.ts":"2023-12-22T15:10:49.093Z",".next\\types\\app\\usunProdukt\\page.ts":"2023-12-19T19:21:12.644Z",".next\\types\\app\\api\\auth\\[...nextauth]\\route.ts":"2023-12-22T15:10:49.093Z","next-auth.d.ts":"2023-12-22T14:49:38.231Z","src\\app\\api\\auth\\[...nextauth]\\route.ts":"2023-12-22T14:16:52.225Z","src\\app\\api\\auth\\[...nextauth]\\auth.config.ts":"2023-12-22T14:43:15.484Z","src\\app\\api\\auth\\[...nextauth]\\auth.ts":"2023-12-22T14:23:51.231Z","src\\app\\api\\auth\\[...nextauth]\\IUserInterface.ts":"2023-12-22T14:42:56.937Z"}}
+{
+  "symbols": {
+    "IUser": {
+      "hasNamespace": false,
+      "type": 1,
+      "moduleName": "IUserInterface",
+      "relativePath": "src\\app\\api\\auth\\[...nextauth]\\IUserInterface"
+    },
+    "IAuthorizationResult": {
+      "hasNamespace": false,
+      "type": 1,
+      "moduleName": "IUserInterface",
+      "relativePath": "src\\app\\api\\auth\\[...nextauth]\\IUserInterface"
+    },
+    "next-auth.Session": {
+      "hasNamespace": true,
+      "type": 1,
+      "moduleName": "next-auth.d",
+      "relativePath": "next-auth.d"
+    },
+    "User": {
+      "hasNamespace": false,
+      "type": 1,
+      "moduleName": "next-auth.d",
+      "relativePath": "next-auth.d"
+    },
+    "JWT": {
+      "hasNamespace": false,
+      "type": 1,
+      "moduleName": "next-auth.d",
+      "relativePath": "next-auth.d"
+    },
+    "Token": {
+      "hasNamespace": false,
+      "type": 1,
+      "moduleName": "next-auth.d",
+      "relativePath": "next-auth.d"
+    },
+    "PageProps": {
+      "hasNamespace": false,
+      "type": 1,
+      "moduleName": "layout",
+      "relativePath": ".next\\types\\app\\layout"
+    },
+    "LayoutProps": {
+      "hasNamespace": false,
+      "type": 1,
+      "moduleName": "layout",
+      "relativePath": ".next\\types\\app\\layout"
+    }
+  },
+  "files": {
+    "next-env.d.ts": "2023-12-22T13:25:12.230Z",
+    "tailwind.config.ts": "2023-12-22T13:24:12.569Z",
+    ".next\\types\\app\\layout.ts": "2023-12-22T15:10:49.093Z",
+    ".next\\types\\app\\page.ts": "2023-12-22T15:10:49.093Z",
+    ".next\\types\\app\\dodajProdukt\\page.ts": "2023-12-22T15:10:49.093Z",
+    ".next\\types\\app\\edycjaProduktu\\page.ts": "2023-12-22T15:10:49.093Z",
+    ".next\\types\\app\\usunProdukt\\page.ts": "2023-12-19T19:21:12.644Z",
+    ".next\\types\\app\\api\\auth\\[...nextauth]\\route.ts": "2023-12-22T15:10:49.093Z",
+    "next-auth.d.ts": "2023-12-22T14:49:38.231Z",
+    "src\\app\\api\\auth\\[...nextauth]\\route.ts": "2023-12-22T14:16:52.225Z",
+    "src\\app\\api\\auth\\[...nextauth]\\auth.config.ts": "2023-12-22T14:43:15.484Z",
+    "src\\app\\api\\auth\\[...nextauth]\\auth.ts": "2023-12-22T14:23:51.231Z",
+    "src\\app\\api\\auth\\[...nextauth]\\IUserInterface.ts": "2023-12-22T14:42:56.937Z"
+  }
+}

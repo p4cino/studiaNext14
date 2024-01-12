@@ -44,6 +44,7 @@ export const authConfig: NextAuthConfig = {
             updated_at: parsedResponse.user.updated_at,
             access_token: parsedResponse.access_token,
           };
+          console.log(data);
 
           return data;
         } catch (error) {
@@ -61,16 +62,10 @@ export const authConfig: NextAuthConfig = {
   },
   callbacks: {
     async jwt({ token, user, account }) {
-      if (user) {
-        token.idToken = user.id;
-        token.accessToken = user?.access_token;
-      }
-      return token;
+      return { ...token, ...user };
     },
-    session({ session, token }) {
-      if (token) {
-        session.user.access_token = token.access_token;
-      }
+    async session({ session, token }) {
+      session.user = token;
       return session;
     },
   },
