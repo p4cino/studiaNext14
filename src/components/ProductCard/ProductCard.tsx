@@ -1,5 +1,4 @@
-'use client';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 
 import {
   Button,
@@ -10,35 +9,44 @@ import {
   Typography,
 } from '@material-tailwind/react';
 
-const ProductCard: FunctionComponent = ({}) => {
+import { Product } from '@/page';
+import { CartContext } from '@/providers/Provider';
+
+interface ProductCardProps {
+  data: Product;
+}
+
+const ProductCard: FunctionComponent<ProductCardProps> = ({ data }) => {
+  const { addToCart } = useContext(CartContext);
+
+  const handleAddToCart = () => {
+    addToCart(data);
+  };
+
   return (
     <Card className="w-full md:w-96">
       <CardHeader shadow={false} floated={false} className="h-96">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80"
-          alt="card-image"
-          className="h-full w-full object-cover"
-        />
+        <img src={data.image} alt="card-image" className="h-full w-full object-cover" />
       </CardHeader>
       <CardBody>
         <div className="mb-2 flex items-center justify-between">
           <Typography color="blue-gray" className="font-medium">
-            Apple AirPods
+            {data.title}
           </Typography>
           <Typography color="blue-gray" className="font-medium">
-            $95.00
+            ${data.price}
           </Typography>
         </div>
         <Typography variant="small" color="gray" className="font-normal opacity-75">
-          With plenty of talk and listen time, voice-activated Siri access, and an available
-          wireless charging case.
+          {data.description}
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
         <Button
           ripple={false}
           fullWidth={true}
+          onClick={handleAddToCart}
           className="bg-blue-600/80 hover:bg-blue-500 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
         >
           Add to Cart

@@ -55,7 +55,7 @@ export function StickyNavbar() {
   }, []);
 
   const { data: session } = useSession();
-  console.log(useSession());
+  // console.log(useSession());
 
   const menuLinksItemsLogged = session ? MenuLinksItemsLogged : MenuLinksItemsGuest;
 
