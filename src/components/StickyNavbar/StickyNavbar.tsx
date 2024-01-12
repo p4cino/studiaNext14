@@ -1,12 +1,10 @@
 'use client';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
-
-import LoginModal from '@/components/LoginModal/LoginModal';
 
 import {
   Badge,
@@ -37,7 +35,7 @@ const MenuLinksItemsLogged: MenuItem = [
     href: '/edycjaProduktu',
   },
   {
-    name: 'Usun Produkt',
+    name: 'Usuń Produkt',
     href: '/usunProdukt',
   },
 ];
@@ -49,30 +47,17 @@ const MenuLinksItemsGuest: MenuItem = [
   },
 ];
 
-const MenuButtonList: MenuItem = [
-  {
-    name: 'Logowanie',
-    href: '/logowanie',
-  },
-  {
-    name: 'Dołacz',
-    href: '/rejestracja',
-  },
-];
-
 export function StickyNavbar() {
-  const [openNav, setOpenNav] = React.useState(false);
-  const [popupVisible, setPopupVisible] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));
   }, []);
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   console.log(useSession());
 
   const menuLinksItemsLogged = session ? MenuLinksItemsLogged : MenuLinksItemsGuest;
-  const toggleLoginPopup = () => setPopupVisible(!popupVisible);
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">

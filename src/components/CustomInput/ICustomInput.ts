@@ -1,12 +1,12 @@
-import React from 'react';
+import { ChangeEvent, FocusEvent, ReactNode } from 'react';
 
 export interface ICustomInput {
   label: string;
   name: string;
   type?: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   step?: string;
-  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur: (e: FocusEvent<HTMLInputElement>) => void;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }

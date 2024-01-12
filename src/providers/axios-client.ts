@@ -25,7 +25,8 @@ const ApiClient = () => {
       return response;
     },
     (error) => {
-      console.log(`error`, error);
+      console.log('error', error);
+      return Promise.reject(error);
     },
   );
 

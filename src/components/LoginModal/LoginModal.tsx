@@ -1,5 +1,5 @@
 'use client';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 
 import type { DialogProps } from '@material-tailwind/react';
 import {
@@ -75,11 +75,11 @@ async function authorize(credentials: ILoginCredentials): Promise<IAuthorization
 }
 
 const LoginModal: FunctionComponent<ILoginModal> = ({ popupStateHandler, popupOpenState }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
     setIsLoading(true);
