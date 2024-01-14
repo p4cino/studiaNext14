@@ -71,7 +71,7 @@ export default function Home() {
             }
 
             try {
-              const response = await ApiClient.post('/api/v1/products/add', formData, {
+              const response = await ApiClient.post('/v1/products/add', formData, {
                 headers: {
                   'Content-Type': 'multipart/form-data',
                 },

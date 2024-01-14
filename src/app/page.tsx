@@ -5,40 +5,46 @@ import ProductCard from '@/components/ProductCard/ProductCard';
 import ApiClient from '@/providers/axios-client';
 
 export type Product = {
-  created_at: string;
+  created_at: Date | string;
   description: string;
   id: number;
   image: string;
   price: number;
   title: string;
-  updated_at: string;
+  updated_at: Date | string;
 };
 
 export interface DataResponse {
   data: Product[];
 }
 
-async function getProducts(): Promise<Product[]> {
-  try {
-    const response = await ApiClient.get<DataResponse>('/api/v1/products');
-    return response.data.data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchProducts() {
-      const fetchedProducts = await getProducts();
-      setProducts(fetchedProducts);
-    }
+    setLoading(true);
 
-    fetchProducts();
+    ApiClient.get<DataResponse>('/v1/products')
+      .then((response) => {
+        setProducts(response.data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Failed to fetch products');
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <main className="container mx-auto py-8">

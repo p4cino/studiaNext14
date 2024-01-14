@@ -6,7 +6,7 @@ const baseURL = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://127.0.0.1:800
 
 const ApiClient = () => {
   const defaultOptions = {
-    baseURL,
+    baseURL: baseURL + `/api`,
   };
 
   const instance = axios.create(defaultOptions);
