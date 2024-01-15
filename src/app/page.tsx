@@ -6,7 +6,7 @@ import ApiClient from '@/providers/axios-client';
 
 export type Product = {
   created_at: Date | string;
-  description: string;
+  body: string;
   id: number;
   image: string;
   price: number;

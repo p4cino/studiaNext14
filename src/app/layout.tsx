@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import type { Metadata } from 'next';
 
 import Footer from '@/components/Footer/Footer';
@@ -12,20 +14,20 @@ export const metadata: Metadata = {
   description: 'Wojciech Puzio',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider>
-      <html lang="en">
-        <body>
-          <div className="flex flex-col min-h-screen">
-            <Provider>
-              <StickyNavbar />
+      <Provider>
+        <html lang="en">
+          <body>
+            <StickyNavbar />
+            <div className="flex flex-col min-h-screen">
               <div className="flex-grow">{children}</div>
               <Footer />
-            </Provider>
-          </div>
-        </body>
-      </html>
+            </div>
+          </body>
+        </html>
+      </Provider>
     </ThemeProvider>
   );
 }

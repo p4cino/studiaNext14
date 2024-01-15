@@ -39,7 +39,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = ({ data }) => {
           </Typography>
         </div>
         <Typography variant="small" color="gray" className="font-normal opacity-75">
-          {data.description}
+          {data.body}
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">

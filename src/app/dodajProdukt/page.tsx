@@ -4,13 +4,12 @@ import { AdjustmentsVerticalIcon, CurrencyDollarIcon } from '@heroicons/react/24
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { Alert, Button, Card, Typography } from '@material-tailwind/react';
-
 import CustomInput from '@/components/CustomInput/CustomInput';
 import CustomTextarea from '@/components/CustomTextarea/CustomtextArea';
 import CustomUploadCarousel from '@/components/CustomUploadCarousel/CustomUploadCarousel';
 import CustomDropZone from '@/components/CutomDropZone/CustomDropZone';
 import ApiClient from '@/providers/axios-client';
+import { Alert, Button, Card, Typography } from '@/providers/ThemeProvider';
 
 const ProductSchema = Yup.object().shape({
   title: Yup.string().required('Nazwa produktu jest wymagana'),

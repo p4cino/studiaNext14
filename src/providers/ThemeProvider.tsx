@@ -1,5 +1,6 @@
 'use client';
 import {
+  Alert,
   Badge,
   Button,
   Card,
@@ -15,6 +16,7 @@ import {
 } from '@material-tailwind/react';
 
 export {
+  Alert,
   Badge,
   Button,
   Card,

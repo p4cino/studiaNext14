@@ -1,19 +1,13 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
-import {
-  Badge,
-  Button,
-  Collapse,
-  IconButton,
-  Navbar,
-  Typography,
-} from '../../providers/ThemeProvider';
+import { CartContext } from '@/providers/Provider';
+import { Badge, Button, Collapse, IconButton, Navbar, Typography } from '@/providers/ThemeProvider';
 
 type MenuItem = {
   name: string;
@@ -32,10 +26,6 @@ const MenuLinksItemsLogged: MenuItem = [
   },
   {
     name: 'Edycja produktu',
-    href: '/edycjaProduktu',
-  },
-  {
-    name: 'Usuń Produkt',
     href: '/usunProdukt',
   },
 ];
@@ -51,11 +41,13 @@ export function StickyNavbar() {
   const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {
-    window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));
+    }
   }, []);
 
   const { data: session } = useSession();
-  // console.log(useSession());
+  const { cart } = useContext(CartContext);
 
   const menuLinksItemsLogged = session ? MenuLinksItemsLogged : MenuLinksItemsGuest;
 
@@ -108,7 +100,7 @@ export function StickyNavbar() {
                 <span>Wyloguj {session?.user?.name}</span>
               </Button>
             )}
-            <Badge color="blue" content={1}>
+            <Badge color="blue" content={cart.length > 0 ? cart.length : false}>
               <IconButton>
                 <ShoppingCartIcon className="h-4 w-4" />
               </IconButton>

@@ -1,38 +1,53 @@
 'use client';
+import { useEffect, useState } from 'react';
 
+import Link from 'next/link';
 import { Card, Typography } from '@material-tailwind/react';
 
-const TABLE_HEAD = ['Nazwa Produktu', 'Cena', 'Stan na magazynie', 'Opcja'];
+import ApiClient from '@/providers/axios-client';
 
-const TABLE_ROWS = [
-  {
-    name: 'Apple AirPods',
-    price: '200$',
-    stock: '23',
-  },
-  {
-    name: 'Alexa Liras',
-    price: '300$',
-    stock: '4',
-  },
-  {
-    name: 'Laurent Perrier',
-    price: '400$',
-    stock: '19',
-  },
-  {
-    name: 'Michael Levi',
-    price: '800$',
-    stock: '24',
-  },
-  {
-    name: 'Richard Gran',
-    price: '100$',
-    stock: '4',
-  },
-];
+const TABLE_HEAD = ['Nazwa Produktu', 'Cena', 'Stan na magazynie', 'Edytuj', 'Usuń'];
+
+interface Product {
+  id: number;
+  title: string;
+  body: string;
+  price: number;
+  amount: number;
+  created_at: string;
+  updated_at: string;
+  image: string;
+}
+
+type AllProductsApiResponse = {
+  data?: Product[];
+};
 
 function TableWithStripedRows() {
+  const [products, setProducts] = useState<AllProductsApiResponse>();
+
+  useEffect(() => {
+    ApiClient.get('/v1/products')
+      .then((response: AllProductsApiResponse) => {
+        // @ts-ignore
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error('There was an error fetching the products', error);
+      });
+  }, []);
+
+  const deleteProduct = (id: number) => {
+    ApiClient.delete(`/v1/products/${id}`)
+      .then(() => {
+        // @ts-ignore
+        setProducts({ data: products?.data.filter((product) => product.id !== id) });
+      })
+      .catch((error) => {
+        console.error('There was an error deleting the product', error);
+      });
+  };
+
   return (
     <Card className="h-full w-full overflow-scroll">
       <table className="w-full min-w-max table-auto text-left">
@@ -52,43 +67,41 @@ function TableWithStripedRows() {
           </tr>
         </thead>
         <tbody>
-          {TABLE_ROWS.map(({ name, price, stock }, index) => (
-            <tr key={name} className="even:bg-blue-gray-50/50">
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {name}
-                </Typography>
-              </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {price}
-                </Typography>
-              </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {stock}
-                </Typography>
-              </td>
-              <td className="p-4">
-                <Typography
-                  as="a"
-                  href="#"
-                  variant="small"
-                  color="blue-gray"
-                  className="font-medium"
-                >
-                  Usun
-                </Typography>
-              </td>
-            </tr>
-          ))}
+          {products?.data &&
+            products?.data.map(({ id, title, price, amount }) => (
+              <tr key={id} className="even:bg-blue-gray-50/50">
+                <td className="p-4">
+                  <Typography variant="small" color="blue-gray" className="font-normal">
+                    {title}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography variant="small" color="blue-gray" className="font-normal">
+                    {`${price}$`}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography variant="small" color="blue-gray" className="font-normal">
+                    {amount}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Link href={`/edycjaProduktu/` + id}>Edycja</Link>
+                </td>
+                <td className="p-4">
+                  <button onClick={() => deleteProduct(id)} className="text-red-200 font-medium">
+                    Usuń
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </Card>
   );
 }
 
-export default function Home() {
+export default function Page() {
   return (
     <main className="container mx-auto py-8 px-8">
       <TableWithStripedRows />

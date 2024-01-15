@@ -20,10 +20,12 @@ const ProductSchema = Yup.object().shape({
   image: Yup.mixed()
     .test('fileSize', 'Plik jest zbyt duży. Maksymalny rozmiar to 800x400px.', (value) => {
       if (!value) return true;
+      // @ts-ignore
       return value.size <= 800 * 400;
     })
     .test('fileType', 'Dozwolone formaty plików to JPG, PNG, SVG, GIF.', (value) => {
       if (!value) return true;
+      // @ts-ignore
       return ['image/jpeg', 'image/png', 'image/svg+xml', 'image/gif'].includes(value.type);
     }),
 });
@@ -56,13 +58,14 @@ export default function EditProduct({ params }) {
       }
     };
 
-    fetchData().then((r) => setIsDataLoaded(true));
+    fetchData().then(() => setIsDataLoaded(true));
   }, [id]);
 
   // @ts-ignore
   const onSelectFile = (setFieldValue, e) => {
     const files = e.target.files;
     if (files && files.length > 0) {
+      // @ts-ignore
       const images = Array.from(files).map((file) => URL.createObjectURL(file));
       setImagePreviews(images);
       setFieldValue('image', files[0]);
@@ -89,7 +92,7 @@ export default function EditProduct({ params }) {
               }
 
               try {
-                const response = await ApiClient.post('/v1/products/1/edit', formData, {
+                await ApiClient.post('/v1/products/1/edit', formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data',
                   },
@@ -107,6 +110,7 @@ export default function EditProduct({ params }) {
             {({ setFieldValue, isSubmitting, handleChange, values, handleBlur }) => (
               <Form className="mt-8 mb-2 w-full sm:w-96">
                 <div className="mb-1 flex flex-col gap-6">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={imageUrlPreviews[0]} alt="product" className="w-full" />
                   <CustomInput
                     label="Nazwa Produktu"
