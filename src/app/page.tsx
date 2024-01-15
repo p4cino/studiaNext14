@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+// import { fetchData } from '@/actions';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import ApiClient from '@/providers/axios-client';
 
@@ -45,6 +46,9 @@ export default function Home() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  // Error: Server Functions cannot be called during initial render. This would create a fetch waterfall. Try to use a Server Component to pass data to Client Components instead.
+  // console.log(fetchData());
 
   return (
     <main className="container mx-auto py-8">

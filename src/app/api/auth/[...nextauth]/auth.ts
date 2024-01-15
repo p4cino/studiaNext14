@@ -4,5 +4,5 @@ import { authConfig } from './auth.config';
 
 export const {
   handlers: { GET, POST },
-  auth: middleware,
+  auth,
 } = NextAuth(authConfig);
